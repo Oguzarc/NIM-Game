@@ -36,23 +36,28 @@ def nimsum(sticks):
         return takeaway,xk
 def UserChoice(turn,sticks):
         try:
-            raw = int(input("Choose a raw:"))
+            while True:
+                raw = int(input("Choose a pile:"))
+                if raw>0 and raw<=len(sticks):
+                    if sticks[raw-1] != 0:
+                        break
+                    else:
+                        print("Already zero")
+                else:
+                    print("Please make legal move")
             raw = raw-1
-            while(raw+1>len(sticks)):
-                print("you entered false raw")
-                raw = int(input("Choose a raw:"))
-                raw = raw - 1
-            while(sticks[raw] == 0):
-                print("It is already zero")
-                raw = int(input("Choose a raw:"))
-                raw = raw - 1
-            remove = int(input("How many number you want to remove ?"))
+            while True:
+                remove = int(input("How many number you want to remove ?"))
+                if remove > 0:
+                    break
+                else:
+                    print("Please make legal move")
             if (sticks[raw] >= remove):
                 sticks[raw] -= remove
                 turn = 0
             else:
                 print("wrong entry!!")
-                turn=UserChoice(turn,sticks)
+                turn = UserChoice(turn, sticks)
         except ValueError:
             print("False Value!!")
         return turn
@@ -80,7 +85,9 @@ for i in range(0,rawnumber):
 x=True
 while x:
     while turn == 1:
+        print("----------------------------")
         print("Current state >>"+str(sticks))
+        print("----------------------------")
         turn=UserChoice(turn,sticks)
         x=control(sticks)
         if(x == False):
@@ -89,7 +96,9 @@ PLAYER WİNS..
 ------------------
 """)
     while turn == 0:
+        print("----------------------------")
         print("Current state >>"+str(sticks))
+        print("----------------------------")
         turn=CompChoice(sticks,turn)
         x=control(sticks)
         if (x == False):
